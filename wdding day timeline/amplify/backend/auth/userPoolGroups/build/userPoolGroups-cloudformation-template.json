@@ -1,0 +1,103 @@
+{
+  "Description": "Root Stack for AWS Amplify CLI",
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "env": {
+      "Type": "String"
+    },
+    "AuthRoleArn": {
+      "Type": "String"
+    },
+    "UnauthRoleArn": {
+      "Type": "String"
+    },
+    "authweddingdaytimeline7caa19ac7caa19acUserPoolId": {
+      "Type": "String",
+      "Default": "authweddingdaytimeline7caa19ac7caa19acUserPoolId"
+    },
+    "authweddingdaytimeline7caa19ac7caa19acIdentityPoolId": {
+      "Type": "String",
+      "Default": "authweddingdaytimeline7caa19ac7caa19acIdentityPoolId"
+    },
+    "authweddingdaytimeline7caa19ac7caa19acAppClientID": {
+      "Type": "String",
+      "Default": "authweddingdaytimeline7caa19ac7caa19acAppClientID"
+    },
+    "authweddingdaytimeline7caa19ac7caa19acAppClientIDWeb": {
+      "Type": "String",
+      "Default": "authweddingdaytimeline7caa19ac7caa19acAppClientIDWeb"
+    }
+  },
+  "Conditions": {
+    "ShouldNotCreateEnvResources": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "NONE"
+      ]
+    }
+  },
+  "Resources": {
+    "ADMINGroup": {
+      "Type": "AWS::Cognito::UserPoolGroup",
+      "Properties": {
+        "UserPoolId": {
+          "Ref": "authweddingdaytimeline7caa19ac7caa19acUserPoolId"
+        },
+        "Description": "override success",
+        "GroupName": "ADMIN",
+        "Precedence": 1,
+        "RoleArn": {
+          "Fn::GetAtt": ["ADMINGroupRole", "Arn"]
+        }
+      }
+    },
+    "ADMINGroupRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "",
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "cognito-identity.amazonaws.com"
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "cognito-identity.amazonaws.com:aud": {
+                    "Ref": "authweddingdaytimeline7caa19ac7caa19acIdentityPoolId"
+                  }
+                },
+                "ForAnyValue:StringLike": {
+                  "cognito-identity.amazonaws.com:amr": "authenticated"
+                }
+              }
+            }
+          ]
+        },
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "authweddingdaytimeline7caa19ac7caa19acUserPoolId"
+              },
+              "-ADMINGroupRole"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "ADMINGroupRole": {
+      "Value": {
+        "Fn::GetAtt": ["ADMINGroupRole", "Arn"]
+      }
+    }
+  }
+}

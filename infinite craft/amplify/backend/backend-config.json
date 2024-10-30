@@ -1,0 +1,68 @@
+{
+  "auth": {
+    "infinitecraft70172f43": {
+      "customAuth": false,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "serviceType": "imported"
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "service": "amplifyhosting",
+      "type": "cicd"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_infinitecraft70172f43_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "infinitecraft70172f43"
+        }
+      ]
+    },
+    "AMPLIFY_auth_infinitecraft70172f43_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "infinitecraft70172f43"
+        }
+      ]
+    },
+    "AMPLIFY_auth_infinitecraft70172f43_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "infinitecraft70172f43"
+        }
+      ]
+    },
+    "AMPLIFY_auth_infinitecraft70172f43_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "infinitecraft70172f43"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_appId": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_type": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    }
+  },
+  "storage": {}
+}

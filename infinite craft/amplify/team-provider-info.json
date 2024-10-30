@@ -1,0 +1,52 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-infinitecraft-dev-133909-authRole",
+      "UnauthRoleArn": "arn:aws:iam::973258939735:role/amplify-infinitecraft-dev-133909-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::973258939735:role/amplify-infinitecraft-dev-133909-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-infinitecraft-dev-133909-deployment",
+      "UnauthRoleName": "amplify-infinitecraft-dev-133909-unauthRole",
+      "StackName": "amplify-infinitecraft-dev-133909",
+      "StackId": "arn:aws:cloudformation:us-east-1:973258939735:stack/amplify-infinitecraft-dev-133909/b4e5cf20-3da2-11ee-a45d-121cee45eb33",
+      "AmplifyAppId": "dmf2e3mw0xy8x"
+    },
+    "categories": {
+      "auth": {
+        "infinitecraft70172f43": {
+          "nativeClientId": "7b90s95g86i0hd0vimj65gv86t",
+          "userPoolId": "us-east-1_pRMrEM0zs",
+          "userPoolName": "dev-infinite-craft-serverless-infinite-craft-dev_auth",
+          "webClientId": "7b90s95g86i0hd0vimj65gv86t"
+        }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dmf2e3mw0xy8x",
+          "type": "cicd"
+        }
+      },
+      "storage": {
+        "s35ad5da5b": {}
+      }
+    }
+  },
+  "prod": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-infinitecraft-prod-180358-authRole",
+      "UnauthRoleArn": "arn:aws:iam::973258939735:role/amplify-infinitecraft-prod-180358-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::973258939735:role/amplify-infinitecraft-prod-180358-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-infinitecraft-prod-180358-deployment",
+      "UnauthRoleName": "amplify-infinitecraft-prod-180358-unauthRole",
+      "StackName": "amplify-infinitecraft-prod-180358",
+      "StackId": "arn:aws:cloudformation:us-east-1:973258939735:stack/amplify-infinitecraft-prod-180358/bc1c0e10-a64a-11ee-863d-0eba4da4c3eb",
+      "AmplifyAppId": "dmf2e3mw0xy8x"
+    },
+    "categories": {
+      "auth": {
+        "infinitecraft70172f43": {}
+      }
+    }
+  }
+}

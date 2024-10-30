@@ -1,0 +1,83 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-weddingdaytimeline-vthreedev-105913-authRole",
+      "UnauthRoleArn": "arn:aws:iam::136311306127:role/amplify-weddingdaytimeline-vthreedev-105913-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::136311306127:role/amplify-weddingdaytimeline-vthreedev-105913-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-weddingdaytimeline-vthreedev-105913-deployment",
+      "UnauthRoleName": "amplify-weddingdaytimeline-vthreedev-105913-unauthRole",
+      "StackName": "amplify-weddingdaytimeline-vthreedev-105913",
+      "StackId": "arn:aws:cloudformation:us-east-1:136311306127:stack/amplify-weddingdaytimeline-vthreedev-105913/f12781c0-bc39-11ee-a640-1259d427c23b",
+      "AmplifyAppId": "d2tu2veopngd49"
+    }
+  },
+  "auth": {
+    "userPoolGroups": {
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "weddingdaytimeline7caa19ac7caa19ac",
+          "attributes": ["UserPoolId", "AppClientIDWeb", "AppClientID", "IdentityPoolId"]
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups",
+      "lastPushTimeStamp": "2024-01-26T11:02:22.796Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-weddingdaytimeline-vthreedev-105913-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
+        "logicalId": "authuserPoolGroups"
+      },
+      "output": {
+        "ADMINGroupRole": "arn:aws:iam::136311306127:role/us-east-1_NV2PzUW1P-ADMINGroupRole"
+      },
+      "lastPushDirHash": "EfThuY+7la33NFpj5BhrODZKe8M="
+    },
+    "weddingdaytimeline7caa19ac7caa19ac": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": ["SMS"],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "signupAttributes": ["EMAIL", "FAMILY_NAME", "NAME"],
+        "socialProviders": [],
+        "usernameAttributes": ["EMAIL"],
+        "verificationMechanisms": ["EMAIL"]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-weddingdaytimeline-vthreedev-105913-deployment/amplify-cfn-templates/auth/weddingdaytimeline7caa19ac7caa19ac-cloudformation-template.json",
+        "logicalId": "authweddingdaytimeline7caa19ac7caa19ac"
+      },
+      "lastPushTimeStamp": "2024-01-26T11:02:22.796Z",
+      "output": {
+        "UserPoolId": "us-east-1_NV2PzUW1P",
+        "AppClientIDWeb": "3mr93gsn6hpldbb23208961cqf",
+        "AppClientID": "3q29f2c08qielj4bis5p7qhsd",
+        "IdentityPoolId": "us-east-1:5c4033a9-1ed1-49fc-87a6-bf605f18d7e9",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:136311306127:userpool/us-east-1_NV2PzUW1P",
+        "IdentityPoolName": "weddingdaytimeline7caa19ac_identitypool_7caa19ac__vthreedev",
+        "UserPoolName": "weddingdaytimeline7caa19ac_userpool_7caa19ac"
+      },
+      "lastPushDirHash": "qNbJoMgyAR0E28MUlCzJx0oAryw="
+    }
+  },
+  "storage": {
+    "weddingdaytimelineffcd6cad": {
+      "service": "S3",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "BucketName": "weddingdaytimelinedev-serverless-storage",
+        "Region": "us-east-1"
+      },
+      "lastPushTimeStamp": "2024-01-26T11:02:22.805Z"
+    }
+  }
+}

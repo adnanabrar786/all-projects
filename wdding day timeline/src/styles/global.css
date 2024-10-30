@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  * {
+    font-family: Poppins, sans;
+  }
+}
+@layer utilities {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    @apply appearance-none;
+  }
+}
+::-webkit-scrollbar {
+  width: 12px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 100vh;
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #efefef;
+  border-radius: 100vh;
+  border: 3px solid #efefef;
+}
+
+body {
+  background-color: #f5fcff;
+}
+.custom-autocomplete-input {
+  font-size: 12px !important;
+  height: '90% !important';
+  padding: 10px;
+}
+
+:root {
+  --black: #000000;
+  --white: #fff;
+  --purple: #512f6f;
+  --greenBlue: #00caa5;
+  --black-100: #000000cc;
+  --yellow: #ffc700;
+  --white-100: #f5f3f6;
+}

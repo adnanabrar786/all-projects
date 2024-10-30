@@ -1,0 +1,27 @@
+{
+  "vthreedev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-weddingdaytimeline-vthreedev-105913-authRole",
+      "UnauthRoleArn": "arn:aws:iam::136311306127:role/amplify-weddingdaytimeline-vthreedev-105913-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::136311306127:role/amplify-weddingdaytimeline-vthreedev-105913-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-weddingdaytimeline-vthreedev-105913-deployment",
+      "UnauthRoleName": "amplify-weddingdaytimeline-vthreedev-105913-unauthRole",
+      "StackName": "amplify-weddingdaytimeline-vthreedev-105913",
+      "StackId": "arn:aws:cloudformation:us-east-1:136311306127:stack/amplify-weddingdaytimeline-vthreedev-105913/f12781c0-bc39-11ee-a640-1259d427c23b",
+      "AmplifyAppId": "d2tu2veopngd49"
+    },
+    "categories": {
+      "storage": {
+        "weddingdaytimelineffcd6cad": {
+          "bucketName": "weddingdaytimelinedev-serverless-storage",
+          "region": "us-east-1"
+        }
+      },
+      "auth": {
+        "weddingdaytimeline7caa19ac7caa19ac": {},
+        "userPoolGroups": {}
+      }
+    }
+  }
+}

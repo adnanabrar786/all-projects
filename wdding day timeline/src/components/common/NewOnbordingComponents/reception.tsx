@@ -1,0 +1,187 @@
+import { Stack, Typography } from '@mui/material';
+import Button from 'components/common/Button';
+import { LOCATIONTYPE } from 'constants/constants';
+import { useFormik } from 'formik';
+import { useEffect, useState } from 'react';
+import { BsArrowRightShort } from 'react-icons/bs';
+import { getMapValueCopy } from 'utils/strings';
+import { errorToast } from 'utils/toast';
+import { AppLoader } from '../AppLoader';
+import MapFieldCopy from '../MapFieldCopy';
+import ShowAppLoaderOrContent from '../ShowAppLoaderOrContent';
+import CouplesCard from './CouplesCard';
+import TitleName from './TitleName';
+import { NEW_ONBOARDING_STEPS_KEYS } from 'constants/localStorage';
+
+const NewReception = ({ nextClick }) => {
+  const [LocationValue, setValue] = useState<google.maps.places.PlaceResult>();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (LocationValue) {
+      localStorage.setItem(NEW_ONBOARDING_STEPS_KEYS.RECEPTION_LOCATION, JSON.stringify(LocationValue));
+      const ceremony_location = JSON.parse(
+        localStorage.getItem(NEW_ONBOARDING_STEPS_KEYS.CEREMONY_LOCATION_SELECTION)!,
+      );
+      if (LocationValue.place_id === ceremony_location.place_id) {
+        formik.setFieldValue('primary', 'Ceremony Location');
+      } else {
+        formik.setFieldValue('primary', '');
+      }
+    }
+  }, [LocationValue]);
+
+  const formik = useFormik({
+    initialValues: {
+      primary: '',
+    },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    onSubmit: () => {},
+  });
+
+  const handleClick = (e) => {
+    if (e.target.name === 'primary') {
+      formik.setFieldValue('primary', e.target.value);
+    }
+  };
+
+  useEffect(() => {
+    const locate = localStorage.getItem(NEW_ONBOARDING_STEPS_KEYS.RECEPTION_LOCATION);
+    if (locate && locate != undefined) {
+      setValue(JSON.parse(locate));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (formik.values.primary) {
+      const locate = localStorage.getItem(NEW_ONBOARDING_STEPS_KEYS.CEREMONY_LOCATION_SELECTION);
+      if (locate && locate != undefined) {
+        setValue(JSON.parse(locate));
+      }
+    }
+  }, [formik.values.primary]);
+
+  const handleSubmit = () => {
+    if (!LocationValue) {
+      errorToast('Please select a location before proceeding.');
+    } else {
+      nextClick();
+    }
+  };
+
+  return (
+    <Stack
+      sx={{
+        height: { lg: '100%', xs: '100%' },
+        justifyContent: { lg: 'flex-start', xs: 'space-between' },
+      }}
+    >
+      <Stack>
+        <Stack
+          sx={{
+            gap: '1.5rem',
+          }}
+        >
+          <TitleName title="Where is your reception?" />
+          <Typography
+            sx={{
+              lineHeight: '1.056rem',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              textAlign: 'center',
+              color: '#000000',
+              opacity: '40%',
+              fontStyle: 'italic',
+            }}
+          >
+            If unsure, pick a central spot in your wedding city.
+          </Typography>
+        </Stack>
+        <Stack>
+          <Stack
+            sx={{
+              marginTop: '1.5rem',
+            }}
+          >
+            {/* <AutoCheckReceptionLocation
+              list={LOCATIONTYPE}
+              onChange={handleClick}
+              value={formik.values.primary}
+              name="primary"
+              val={getMapValueCopy(LocationValue)}
+            /> */}
+            <CouplesCard list={LOCATIONTYPE} onChange={handleClick} value={formik.values.primary} name="primary" />
+          </Stack>
+
+          <Stack
+            sx={{
+              position: 'relative',
+              marginTop: '1rem',
+              boxShadow: '0px 4px 4px 0px #00000033',
+              borderRadius: '0.5rem',
+            }}
+          >
+            <MapFieldCopy
+              setIsLoading={setIsLoading}
+              icon={true}
+              val={getMapValueCopy(LocationValue!)}
+              setValue={setValue}
+              sx={{
+                padding: '1.2rem 0.5rem',
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderRadius: '0.5rem',
+              }}
+              inputStyle={{
+                border: 'none',
+                outline: 'none',
+                paddingLeft: '0.75rem',
+              }}
+            />
+          </Stack>
+        </Stack>
+      </Stack>
+
+      <Stack sx={{ marginTop: { lg: '15.5rem', xs: '2rem' }, marginBottom: { lg: '0rem', xs: '2.75rem' } }}>
+        <Button
+          className="flex justify-center items-center xl:h-10 cursor-pointer rounded-lg w-full py-7 bg-[#00CAA599!important] h-[68px]"
+          type="submit"
+          id="next-btn"
+          onClick={isLoading ? undefined : handleSubmit}
+        >
+          <div className="flex justify-center items-center font-semibold px-8 py-2">
+            <ShowAppLoaderOrContent data={false} size={30} color={'#fff'}>
+              <Stack
+                direction={'row'}
+                sx={{
+                  gap: '0.25rem',
+                  alignItems: 'center',
+                }}
+              >
+                {isLoading ? (
+                  <>
+                    <AppLoader color="white" height="auto" />
+                  </>
+                ) : (
+                  <>
+                    <Typography
+                      sx={{
+                        fontSize: '1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Next
+                    </Typography>
+                    <BsArrowRightShort fontSize={'30px'} />
+                  </>
+                )}
+              </Stack>
+            </ShowAppLoaderOrContent>
+          </div>
+        </Button>
+      </Stack>
+    </Stack>
+  );
+};
+
+export default NewReception;

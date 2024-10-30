@@ -1,0 +1,560 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CancelSubscription {
+  id             Int       @id @default(autoincrement())
+  start_date     BigInt?
+  end_date       BigInt?
+  metadata       Json?
+  current_status String
+  user_id        String    @unique
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now())
+  deleted        Boolean   @default(false)
+  deleteTime     DateTime?
+  Users          Users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id                   Int                    @id @default(autoincrement())
+  label                String
+  type                 CategoryType
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @default(now())
+  Couple               Couple[]
+  GuestHasCategories   GuestHasCategories[]
+  GuestsHasCategories  GuestsHasCategories[]
+  VendorHasCategories  VendorHasCategories[]
+  VendorsHasCategories VendorsHasCategories[]
+}
+
+model Ceremony {
+  id                Int       @id @default(autoincrement())
+  duration          Int
+  lat               Float
+  long              Float
+  location_metadata Json
+  wedding_id        Int       @unique
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @default(now())
+  deleted           Boolean   @default(false)
+  deleteTime        DateTime?
+  createdBy         String    @unique
+  start_time        BigInt
+  Users             Users     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  Wedding           Wedding   @relation(fields: [wedding_id], references: [id], onDelete: Cascade)
+}
+
+model Couple {
+  id                            Int                      @id @default(autoincrement())
+  user_id                       String
+  wedding_id                    Int
+  category_id                   Int
+  createdAt                     DateTime                 @default(now())
+  createdBy                     String
+  deleteTime                    DateTime?
+  deleted                       Boolean                  @default(false)
+  updatedAt                     DateTime                 @default(now())
+  Category                      Category                 @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  Users_Couple_createdByToUsers Users                    @relation("Couple_createdByToUsers", fields: [createdBy], references: [id], onDelete: Cascade)
+  Users                         Users                    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  Wedding                       Wedding                  @relation(fields: [wedding_id], references: [id], onDelete: Cascade)
+  GettingReady                  GettingReady[]
+  GuestHasWedding               GuestHasWedding[]
+  Guests                        Guests[]
+  Photography                   Photography[]
+  SpecialFirstLookPhotos        SpecialFirstLookPhotos[]
+
+  @@unique([user_id, wedding_id])
+}
+
+model FirstLook {
+  id                Int       @id @default(autoincrement())
+  wedding_id        Int       @unique
+  status            Boolean
+  lat               Float?
+  long              Float?
+  location_metadata Json?
+  createdBy         String    @unique
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @default(now())
+  deleted           Boolean   @default(false)
+  deleteTime        DateTime?
+  Users             Users     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  Wedding           Wedding   @relation(fields: [wedding_id], references: [id], onDelete: Cascade)
+}
+
+model GettingReady {
+  id                Int                 @id @default(autoincrement())
+  couple_id         Int
+  wedding_id        Int
+  duration          Int?
+  lat               Float
+  long              Float
+  location_metadata Json
+  createdBy         String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @default(now())
+  deleted           Boolean             @default(false)
+  deleteTime        DateTime?
+  type              GettingTypeCategory
+  Couple            Couple              @relation(fields: [couple_id], references: [id], onDelete: Cascade)
+  Users             Users               @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  Wedding           Wedding             @relation(fields: [wedding_id], references: [id], onDelete: Cascade)
+
+  @@unique([couple_id, wedding_id, type])
+}
+
+model Guest {
+  id              Int               @id @default(autoincrement())
+  user_id         String            @unique
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @default(now())
+  deleted         Boolean           @default(false)
+  deleted_at      DateTime?
+  Users           Users             @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  GuestHasWedding GuestHasWedding[]
+}
+
+model GuestHasCategories {
+  id                Int             @id @default(autoincrement())
+  guest_has_wedding Int
+  category_id       Int
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @default(now())
+  Category          Category        @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  GuestHasWedding   GuestHasWedding @relation(fields: [guest_has_wedding], references: [id], onDelete: Cascade)
+
+  @@unique([guest_has_wedding, category_id])
+}
+
+model GuestHasWedding {
+  id                 Int                  @id @default(autoincrement())
+  guest_id           Int
+  wedding_id         Int
+  couple_id          Int
+  GuestHasCategories GuestHasCategories[]
+  Couple             Couple               @relation(fields: [couple_id], references: [id], onDelete: Cascade)
+  Guest              Guest                @relation(fields: [guest_id], references: [id], onDelete: Cascade)
+  Wedding            Wedding              @relation(fields: [wedding_id], references: [id], onDelete: Cascade)
+
+  @@unique([guest_id, wedding_id])
+}
+
+model Photography {
+  id                Int                      @id @default(autoincrement())
+  status            Boolean
+  type              PhotographyType
+  sequence          PhotographySequenceType?
+  lat               Float?
+  long              Float?
+  couple_id         Int?
+  wedding_id        Int
+  location_metadata Json?
+  createdBy         String
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @default(now())
+  deleted           Boolean                  @default(false)
+  deleteTime        DateTime?
+  Couple            Couple?                  @relation(fields: [couple_id], references: [id], onDelete: Cascade)
+  Users             Users                    @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  Wedding           Wedding                  @relation(fields: [wedding_id], references: [id], onDelete: Cascade)
+
+  @@unique([type, wedding_id])
+}
+
+model Reception {
+  id                Int             @id @default(autoincrement())
+  lat               Float?
+  long              Float?
+  cocktail_hour     Boolean
+  expected_guests   Int?
+  location_metadata Json?
+  wedding_id        Int             @unique
+  reception_type    Int
+  createdBy         String          @unique
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @default(now())
+  deleted           Boolean         @default(false)
+  deleteTime        DateTime?
+  start_time        BigInt?
+  end_time          BigInt?
+  Users             Users           @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  TypeOfReception   TypeOfReception @relation(fields: [reception_type], references: [id], onDelete: Cascade)
+  Wedding           Wedding         @relation(fields: [wedding_id], references: [id])
+}
+
+model SpecialFirstLookPhotos {
+  id                Int       @id @default(autoincrement())
+  couple_id         Int
+  wedding_id        Int
+  status            Boolean
+  person            String?
+  lat               Float?
+  long              Float?
+  location_metadata Json?
+  createdBy         String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @default(now())
+  deleted           Boolean   @default(false)
+  deleteTime        DateTime?
+  Couple            Couple    @relation(fields: [couple_id], references: [id], onDelete: Cascade)
+  Users             Users     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  Wedding           Wedding   @relation(fields: [wedding_id], references: [id], onDelete: Cascade)
+
+  @@unique([couple_id, wedding_id])
+}
+
+model Subscription {
+  id              Int       @id @default(autoincrement())
+  start_date      BigInt?
+  end_date        BigInt?
+  metadata        Json?
+  amount_paid     Float
+  current_status  String
+  invoice_id      String
+  user_id         String    @unique
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now())
+  deleted         Boolean   @default(false)
+  deleteTime      DateTime?
+  subscription_id String
+  Users           Users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model SunsetPhotos {
+  id         Int       @id @default(autoincrement())
+  wedding_id Int       @unique
+  status     Boolean
+  createdBy  String    @unique
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  deleted    Boolean   @default(false)
+  deleteTime DateTime?
+  Users      Users     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  Wedding    Wedding   @relation(fields: [wedding_id], references: [id], onDelete: Cascade)
+}
+
+model Timeline {
+  id         String    @id
+  timeline   Json
+  wedding_id Int       @unique
+  pdf_links  Json?
+  createdBy  String    @unique
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  deleted    Boolean   @default(false)
+  deleteTime DateTime?
+  timezone   String?
+  Users      Users     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  Wedding    Wedding   @relation(fields: [wedding_id], references: [id], onDelete: Cascade)
+}
+
+model TypeOfReception {
+  id         Int                 @id @default(autoincrement())
+  name       String
+  type       TypeOfReceptionEnum @default(NO_RECEPTION)
+  calculate  Boolean?            @default(true)
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @default(now())
+  deleted    Boolean             @default(false)
+  deleteTime DateTime?
+  Reception  Reception[]
+}
+
+model UniversalChecklist {
+  id        Int      @id @default(autoincrement())
+  label     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model UserCard {
+  id                      Int      @id @default(autoincrement())
+  payment_method_id       String   @unique
+  last4                   String
+  brand                   String
+  country                 String?
+  exp_year                String
+  exp_month               String
+  default                 Boolean  @default(false)
+  setup_intent_metadata   Json
+  payment_method_metadata Json
+  createdBy               String
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @default(now())
+  Users                   Users    @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+}
+
+model UserChecklist {
+  id         Int      @id @default(autoincrement())
+  label      String
+  checked    Boolean
+  createdBy  String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  Users      Users    @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+}
+
+model Users {
+  id                             String                   @id
+  email                          String?
+  type                           UserType
+  first_name                     String?
+  last_name                      String?
+  phone                          String?
+  picture                        String?
+  stripe_id                      String?                  @unique
+  created_at                     DateTime                 @default(now())
+  updated_at                     DateTime                 @default(now())
+  deleted                        Boolean                  @default(false)
+  deleted_at                     DateTime?
+  subscrpition_type              SubscriptionType         @default(FREEMIUM)
+  full_name                      String?
+  mailerlite_id                  String?
+  trial_expiry_date              Int?
+  version                        USER_VERSIONS            @default(V3)
+  CancelSubscription             CancelSubscription?
+  Ceremony                       Ceremony?
+  Couple_Couple_createdByToUsers Couple[]                 @relation("Couple_createdByToUsers")
+  Couple                         Couple[]
+  Coupons                        Coupons?
+  FirstLook                      FirstLook?
+  GettingReady                   GettingReady[]
+  Guest                          Guest?
+  Photography                    Photography[]
+  Reception                      Reception?
+  SpecialFirstLookPhotos         SpecialFirstLookPhotos[]
+  Subscription                   Subscription?
+  SunsetPhotos                   SunsetPhotos?
+  Timeline                       Timeline?
+  UserCard                       UserCard[]
+  UserChecklist                  UserChecklist[]
+  Vendor                         Vendor?
+  Wedding                        Wedding?
+}
+
+model Vendor {
+  id               Int                @id @default(autoincrement())
+  user_id          String             @unique
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @default(now())
+  deleted          Boolean            @default(false)
+  deleted_at       DateTime?
+  Users            Users              @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  VendorHasWedding VendorHasWedding[]
+}
+
+model VendorHasCategories {
+  id                 Int              @id @default(autoincrement())
+  vendor_has_wedding Int
+  category_id        Int
+  created_at         DateTime         @default(now())
+  updated_at         DateTime         @default(now())
+  Category           Category         @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  VendorHasWedding   VendorHasWedding @relation(fields: [vendor_has_wedding], references: [id], onDelete: Cascade)
+
+  @@unique([vendor_has_wedding, category_id])
+}
+
+model VendorHasWedding {
+  id                  Int                   @id @default(autoincrement())
+  vendor_id           Int
+  wedding_id          Int
+  address             String?
+  VendorHasCategories VendorHasCategories[]
+  Vendor              Vendor                @relation(fields: [vendor_id], references: [id], onDelete: Cascade)
+  Wedding             Wedding               @relation(fields: [wedding_id], references: [id], onDelete: Cascade)
+
+  @@unique([vendor_id, wedding_id])
+}
+
+model Wedding {
+  id                     Int                      @id @default(autoincrement())
+  createdAt              DateTime                 @default(now())
+  deleteTime             DateTime?
+  deleted                Boolean                  @default(false)
+  updatedAt              DateTime                 @default(now())
+  createdBy              String                   @unique
+  onboarding_status      OnboardingType           @default(TWO_OF_YOU)
+  date                   BigInt
+  wedding_cover          String?
+  sunset_time            BigInt?
+  timezone               String?
+  timezone_offset        Int?
+  Ceremony               Ceremony?
+  Couple                 Couple[]
+  FirstLook              FirstLook?
+  GettingReady           GettingReady[]
+  GuestHasWedding        GuestHasWedding[]
+  GuestsHasWedding       GuestsHasWedding[]
+  Photography            Photography[]
+  Reception              Reception?
+  SpecialFirstLookPhotos SpecialFirstLookPhotos[]
+  SunsetPhotos           SunsetPhotos?
+  Timeline               Timeline?
+  VendorHasWedding       VendorHasWedding[]
+  VendorsHasWedding      VendorsHasWedding[]
+  Users                  Users                    @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+}
+
+model Coupons {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  used_by   String?  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  Users     Users?   @relation(fields: [used_by], references: [id], onDelete: Cascade)
+}
+
+model Guests {
+  id               Int                @id @default(autoincrement())
+  first_name       String
+  last_name        String
+  email            String?
+  phone            String?
+  picture          String?
+  created_by       String
+  deleted          Boolean            @default(false)
+  created_at       DateTime           @default(now())
+  deleted_at       DateTime?
+  updated_at       DateTime           @default(now())
+  couple_id        Int
+  Couple           Couple             @relation(fields: [couple_id], references: [id], onDelete: Cascade)
+  GuestsHasWedding GuestsHasWedding[]
+}
+
+model GuestsHasCategories {
+  id                Int              @id @default(autoincrement())
+  category_id       Int
+  created_at        DateTime         @default(now())
+  updated_at        DateTime         @default(now())
+  guest_has_wedding Int
+  Category          Category         @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  GuestsHasWedding  GuestsHasWedding @relation(fields: [guest_has_wedding], references: [id], onDelete: Cascade)
+}
+
+model GuestsHasWedding {
+  id                  Int                   @id @default(autoincrement())
+  guest_id            Int
+  wedding_id          Int
+  GuestsHasCategories GuestsHasCategories[]
+  Guests              Guests                @relation(fields: [guest_id], references: [id], onDelete: Cascade)
+  Wedding             Wedding               @relation(fields: [wedding_id], references: [id], onDelete: Cascade)
+}
+
+model Vendors {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  picture           String?
+  email             String?
+  phone             String?
+  address           String?
+  created_by        String
+  deleted           Boolean             @default(false)
+  created_at        DateTime            @default(now())
+  deleted_at        DateTime?
+  updated_at        DateTime            @default(now())
+  VendorsHasWedding VendorsHasWedding[]
+}
+
+model VendorsHasCategories {
+  id                 Int               @id @default(autoincrement())
+  category_id        Int
+  created_at         DateTime          @default(now())
+  updated_at         DateTime          @default(now())
+  vendor_has_wedding Int
+  Category           Category          @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  VendorsHasWedding  VendorsHasWedding @relation(fields: [vendor_has_wedding], references: [id], onDelete: Cascade)
+}
+
+model VendorsHasWedding {
+  id                   Int                    @id @default(autoincrement())
+  vendor_id            Int
+  wedding_id           Int
+  VendorsHasCategories VendorsHasCategories[]
+  Vendors              Vendors                @relation(fields: [vendor_id], references: [id], onDelete: Cascade)
+  Wedding              Wedding                @relation(fields: [wedding_id], references: [id], onDelete: Cascade)
+
+  @@unique([vendor_id, wedding_id])
+}
+
+enum CategoryType {
+  VENDOR
+  GUESTS
+  COUPLES
+  RECEPTION
+}
+
+enum EventType {
+  FIXED
+  TRAVEL
+  CUSTOM
+  REGULAR
+  FLOATING
+}
+
+enum GettingTypeCategory {
+  DRESSING
+  HAIR_AND_MAKEUP
+}
+
+enum OnboardingType {
+  TWO_OF_YOU
+  CEREMONY
+  RECEPTION
+  GETTING_READY
+  FIRST_LOOK
+  PHOTOGRAPHY
+  SPECIAL_FIRST_LOOK
+  SUNSET_PHOTOS
+  COMPLETED
+}
+
+enum PhotographySequenceType {
+  AFTER
+  BEFORE
+}
+
+enum PhotographyType {
+  COUPLES
+  GROOMSMEN
+  BRIDESMAID
+  WEDDING_PARTY
+  COMBINED_FAMILY
+  IMMEDIATE_FAMILY
+  GROOM_IMMEDIATE_FAMILY
+  BRIDE_IMMEDIATE_FAMILY
+}
+
+enum SubscriptionType {
+  FREEMIUM
+  PRO_MONTHLY
+  PRO_YEARLY
+  CANCELLED
+  TRIAL
+  PREMIUM
+}
+
+enum TypeOfReceptionEnum {
+  LUNCH
+  DINNER
+  NO_RECEPTION
+}
+
+enum UserType {
+  USER
+  VENDOR
+}
+
+enum USER_VERSIONS {
+  V2
+  V3
+}
