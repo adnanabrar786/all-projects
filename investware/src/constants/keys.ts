@@ -1,0 +1,4 @@
+export enum LOCAL_STORAGE_KEYS {
+  SPOT_CURVE = 'SPOT_CURVE ',
+  PAR_CURVE = 'PAR_CURVE',
+}

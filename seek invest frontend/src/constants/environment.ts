@@ -1,0 +1,11 @@
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+export const SCORING_SERVICE_BASE_URL =
+  process.env.NEXT_PUBLIC_SCORING_SERVICE_BASE_URL;
+export const COPY_TO_JSON = process.env.NEXT_PUBLIC_COPY_TO_JSON;
+export const CLIENTS_SAMPLE_FILE = process.env.NEXT_PUBLIC_CLIENTS_SAMPLE_FILE;
+export const ACCOUNTS_SAMPLE_FILE =
+  process.env.NEXT_PUBLIC_ACCOUNTS_SAMPLE_FILE;
+export const MODELS_SAMPLE_FILE = process.env.NEXT_PUBLIC_MODELS_SAMPLE_FILE;
+
+export const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+export const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST;

@@ -1,0 +1,11 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="Frame 427319141">
+        <rect id="Rectangle 993" x="0.988281" y="1.12695" width="20.0215" height="5.57" rx="2.785" stroke="#344054" />
+        <rect id="Rectangle 994" x="0.988281" y="9.00659" width="20.0215" height="5.57153" rx="2.78577"
+            stroke="#344054" />
+        <path id="Line 60" d="M7.38281 3.91211L18.0342 3.91211" stroke="#344054" stroke-linecap="round" />
+        <path id="Line 61" d="M7.38281 11.7925L18.0342 11.7925" stroke="#344054" stroke-linecap="round" />
+        <circle id="Ellipse 442" cx="4.12355" cy="3.91211" r="1.08448" fill="#344054" />
+        <circle id="Ellipse 444" cx="4.12355" cy="11.9121" r="0.734483" stroke="#344054" stroke-width="0.7" />
+    </g>
+</svg>

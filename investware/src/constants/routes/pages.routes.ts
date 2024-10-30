@@ -1,0 +1,9 @@
+export const ROOT_PAGE = '/';
+export const LOGIN = '/login';
+export const SIGN_UP = '/sign-up';
+export const FORGET_PASSWORD = '/forget-password';
+export const RESET_PASSWORD = '/reset-password';
+export const EMAIL_VERIFIED = '/email-verify';
+export const EMAIL_VERIFICATION = '/email-verification';
+export const PROFILE = '/profile';
+export const TRADE = '/trade';

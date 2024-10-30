@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Roboto;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
+}
+
+:root {
+  --text-black: rgba(0, 0, 0, 0.87);
+  --text-grey: rgba(0, 0, 0, 0.56);
+  --text-grey-100: rgba(0, 0, 0, 0.6);
+  --text-grey-200: rgba(0, 0, 0, 0.12);
+  --text-grey-200: #616161;
+  --text-dark-grey: rgba(0, 0, 0, 0.6);
+  --text-grey-300: #344054;
+  --white: #fff;
+  --sky-blue: #2196f3;
+  --skyblue-100: #1e88e5;
+  --sky-blue-200: rgba(33, 150, 243, 0.5);
+  --grey-100: #eaecf0;
+  --green: #2e7d32;
+  --border-grey: rgba(0, 0, 0, 0.12);
+  --red: #d32f2f;
+  --grey-200: #d9d9d9;
+  --border-grey-100: rgba(0, 0, 0, 0.23);
+  --border-grey-200: #e0e0e0;
+  --button-text-grey: rgba(0, 0, 0, 0.38);
+  --background-grey: rgba(0, 0, 0, 0.04);
+  --light-red: #fdeded;
+  --maroon: #5f2120;
+}

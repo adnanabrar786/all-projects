@@ -1,0 +1,16 @@
+export const TOAST_MESSAGES = {
+  CREATED_SUCCESSFULLY: 'Created Successfully',
+  CODE_SENT_T0_EMAIL: 'Code sent to your email',
+  CHECK_YOUR_EMAIL: 'Check Your Email',
+  SIGN_IN_SUCCESSFULLY: 'SignIn Successfully',
+  SOMETHING_WENT_WRONG: 'something went wrong',
+  INTERNAL_SERVER_ERROR: 'Internal Server Error',
+  YOUR_PASSWORD_UPDATED: 'Your Password Updated',
+  PASSWORD_UPDATED: 'Password Updated',
+  CREATED_SUCCESSFULLY_CHECK_YOUR_EMAIL: 'Created Successfully check your Email',
+  AGREE_PRIVACY_POLICY: 'Please agree to our privacy policy',
+  USER_ALREADY_EXIT: 'User Already Exit',
+  UPDATE_USER: 'User Updated',
+  TRADE_CREATED: 'Trade Created Successfully',
+  TRADE_SAVED: 'Trade Saved Successfully',
+};
