@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+if [[ -f package-lock.json ]]; then
+  echo "Error: package-lock.json found. Please use Yarn instead of npm."
+  exit 1
+fi
+
+yarn format
+yarn check-format
+yarn check-app-types

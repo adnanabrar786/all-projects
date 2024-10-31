@@ -1,0 +1,25 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizzing: "border-box";
+  max-width: "1440px";
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+:root {
+  --text-grey: #767676;
+  --text-heading: #292929;
+  --black: #000;
+  --white: #fff;
+  --black-footer: #292929;
+  --light-grey: #cacaca;
+  --dark-green: #155932;
+  --page-background: #f7f8fb;
+  --search-background: #ededee;
+  --text-background: #f9f9f9;
+  --red: #ff0000;
+}
