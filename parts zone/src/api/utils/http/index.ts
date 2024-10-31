@@ -1,0 +1,11 @@
+export const Bad_Request = 400;
+export const Unauthorized = 401;
+export const Forbidden = 403;
+export const NOT_FOUND_CODE = 404;
+export const VALIDATION_ERROR_CODE = 422;
+export const Too_Many_Requests = 429;
+export const INTERNAL_SERVER_ERROR = 500;
+export const Not_Implemented = 501;
+export const Bad_Gateway = 502;
+export const Service_Unavailable = 503;
+export const Gateway_Timed_Out = 504;

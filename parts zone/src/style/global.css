@@ -1,0 +1,102 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: "border-box";
+  max-width: "1440px";
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+:root {
+  --text-grey: #767676;
+  --light-grey-100: #a7a7a7;
+  --text-heading: #292929;
+  --black: #000;
+  --white: #fff;
+  --black-footer: #292929;
+  --light-grey: #cacaca;
+  --dark-blue: #155932;
+  --page-background: #f7f8fb;
+  --search-background: #ededee;
+  --text-background: #f9f9f9;
+  --red: #d32f2f;
+  --dark-blue: #00728c;
+  --sky-blue: #00a6cc;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid var(--sky-blue);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  position: fixed;
+  overflow: "hidden";
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/Lato-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/OpenSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Krona One";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/KronaOne-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/Inter-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Exo";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/Exo-Regular.ttf") format("truetype");
+}

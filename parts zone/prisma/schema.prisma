@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Categories {
+  id                  Int                  @id @default(autoincrement())
+  name                String
+  slug                String
+  status              Boolean              @default(true)
+  sequence            Int?
+  short_description   String?
+  long_description    String?
+  picture             String?
+  meta_keywords       String?
+  meta_description    String?
+  parent_id           Int?
+  created_at          DateTime             @default(now())
+  updated_at          DateTime             @default(now())
+  parent              Categories?          @relation("ParentCategories", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  categories          Categories[]         @relation("ParentCategories")
+  categories_products CategoriesProducts[]
+}
+
+model CategoriesProducts {
+  id             Int        @id @default(autoincrement())
+  sale_price     Float?
+  purchase_price Float?
+  featured       Boolean?
+  top_rated      Boolean?
+  categories_id  Int
+  products_id    Int
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @default(now())
+  categories     Categories @relation(fields: [categories_id], references: [id])
+  Products       Products   @relation(fields: [products_id], references: [id])
+}
+
+model Products {
+  id                  Int                  @id @default(autoincrement())
+  name                String
+  slug                String
+  status              Boolean              @default(true)
+  sequence            Int?
+  code                String?
+  meta_keywords       String?
+  meta_description    String?
+  short_description   String?
+  long_description    String?
+  created_at          DateTime             @default(now())
+  updated_at          DateTime             @default(now())
+  oem                 String?
+  categories_products CategoriesProducts[]
+  product_images      ProductImages[]
+  product_options     ProductOptions[]
+}
+
+model ProductImages {
+  id            Int      @id @default(autoincrement())
+  url           String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
+  products_id   Int
+  thumbnail_url String?
+  products      Products @relation(fields: [products_id], references: [id])
+}
+
+model ProductOptions {
+  id          Int      @id @default(autoincrement())
+  products_id Int
+  options_id  Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+  featured    Boolean  @default(false)
+  on_sale     Boolean  @default(false)
+  top_rated   Boolean  @default(false)
+  Options     Options  @relation(fields: [options_id], references: [id])
+  products    Products @relation(fields: [products_id], references: [id])
+}
+
+model Options {
+  id              Int              @id @default(autoincrement())
+  value           String
+  created_at      DateTime         @default(now())
+  updated_at      DateTime         @default(now())
+  image_url       String?
+  slug            String?
+  product_options ProductOptions[]
+}
+
+model Subscribers {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+}
+
+model ContactUs {
+  id           Int     @id @default(autoincrement())
+  first_name   String
+  last_name    String?
+  phone_no     String?
+  company_name String?
+  email        String
+  country      String?
+  message      String
+}
